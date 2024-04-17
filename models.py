@@ -26,3 +26,15 @@ class Pitcher(db.Model, SerializerMixin):
     innings_pitched = db.Column(db.Float)
     strikeouts = db.Column(db.Integer)
     year = db.Column(db.Integer)
+
+class HockeyEvent(db.Model, SerializerMixin):
+    __tablename__ = "hockey_event_table"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    time = db.Column(db.String(50))
+    event = db.Column(db.String(100))
+    game_id = db.Column(db.Integer)
+    team_name = db.Column(db.String(100))
+
+    def __repr__(self):
+        return f'<HockeyEvent {self.name} - {self.event}>'

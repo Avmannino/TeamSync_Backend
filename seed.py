@@ -1,8 +1,6 @@
 import json
-from models import db, Pitcher  
+from models import db, Pitcher, HockeyEvent  # Import HockeyEvent as well
 from app import app  
-
-
 
 if __name__ == "__main__":
     with app.app_context():
@@ -20,8 +18,18 @@ if __name__ == "__main__":
                     strikeouts=pitcher_data["strikeouts"],
                     year=pitcher_data["year"]
                 )
-
-                # Add Pitcher object to the session and commit changes
                 db.session.add(pitcher)
-
+            db.session.commit()
+            
+        with open("hockey_data.json") as f:  
+            data = json.load(f)
+            for event_data in data:
+                event = HockeyEvent(
+                    time=event_data["time"],
+                    name=event_data["name"],
+                    event=event_data["event"],
+                    game_id=event_data["game_id"],
+                    team_name=event_data["team_name"]
+                )
+                db.session.add(event)
             db.session.commit()
